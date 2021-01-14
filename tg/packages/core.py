@@ -1,3 +1,4 @@
+import time
 from tg import BasePackage
 from tg import loader
 
@@ -10,13 +11,16 @@ class Package(BasePackage):
         return "Core"
 
     def commands(self):
-        return ["ping", "machine", "reload"]
+        return ["ping", "reload"]
 
     def ping(self):
-        return "🏓 Pong!"
+        async def action(client, msg):
+            t = time.time()
+            await msg.edit(f"🏓 Pong!")
+            t = time.time() - t
+            await msg.edit(f"🏓 Pong! {int(t * 1000)}ms")
 
-    def machine(self):
-        pass
+        return action
 
     def reload(self):
         async def action(_, msg):

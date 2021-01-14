@@ -9,13 +9,10 @@ class Package(BasePackage):
         return "Echo"
 
     def commands(self):
-        return ["afk", "spam", "dice"]
+        return ["echo", "afk", "spam", "dice"]
 
     def echo(self, v):
-        return f"{self.emoji()} {v}"
-
-    def afk(self):
-        pass
+        return v
 
     def spam(self, n, *v):
         async def action(client, msg):
@@ -25,5 +22,12 @@ class Package(BasePackage):
             
         return action
 
-    def dice(self):
-        pass
+    def dice(self, needed):
+        async def action(client, msg):
+            for _ in range(20):
+                await msg.delete()
+                msg = await client.send_dice(msg.chat.id)
+                if msg.dice.value == int(needed):
+                    return
+
+        return action

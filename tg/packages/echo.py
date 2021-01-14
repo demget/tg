@@ -9,10 +9,10 @@ class Package(BasePackage):
         return "Echo"
 
     def commands(self):
-        return ["echo", "afk", "spam", "dice"]
+        return ["echo", "spam", "dice"]
 
-    def echo(self, v):
-        return v
+    def echo(self, *v):
+        return " ".join(v)
 
     def spam(self, n, *v):
         async def action(client, msg):

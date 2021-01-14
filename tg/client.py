@@ -29,7 +29,7 @@ async def on_command(_, msg):
         res = execute_command(name, args)
         if callable(res):
             await res(client, msg)
-        else:
+        elif res is not None:
             await msg.edit(res)
     except Exception as e:
         logger.error(e)

@@ -1,0 +1,2 @@
+Pyrogram==1.1.11
+TgCrypto==1.2.2

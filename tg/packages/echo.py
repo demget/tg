@@ -27,12 +27,10 @@ class Package(BasePackage):
 
     def dice(self, needed):
         async def action(client, msg):
-            msg = None
             for _ in range(20):
-                if msg:
-                    await msg.delete()
+                await msg.delete()
                 msg = await client.send_dice(msg.chat.id)
                 if msg.dice.value == int(needed):
-                    return
+                    break
 
         return action

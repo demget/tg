@@ -17,15 +17,20 @@ class Package(BasePackage):
     def spam(self, n, *v):
         async def action(client, msg):
             for i in range(int(n)):
-                await client.send_message(msg.chat.id, " ".join(v))
+                if msg.reply_to_message:
+                    await msg.reply_to_message.reply(" ".join(v))
+                else:
+                    await client.send_message(msg.chat.id, " ".join(v))
             await msg.delete()
             
         return action
 
     def dice(self, needed):
         async def action(client, msg):
+            msg = None
             for _ in range(20):
-                await msg.delete()
+                if msg:
+                    await msg.delete()
                 msg = await client.send_dice(msg.chat.id)
                 if msg.dice.value == int(needed):
                     return
